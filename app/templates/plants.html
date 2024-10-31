@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+
+{% block title %}Plants - Pixel Garden{% endblock %}
+
+{% block content %}
+<section id="plants" class="section active">
+    <h1>Plant Wiki</h1>
+
+    <div class="filter-container">
+        <button class="filter-button">
+            <i class="fas fa-filter"></i>Filter
+        </button>
+
+        <div class="filter-dropdown">
+            {% for category in ['Ayurveda', 'Yoga & Naturopathy', 'Unani', 'Siddha', 'Homeopathy'] %}
+            <div class="category" data-category="{{ category }}">
+                {{ category }}
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="search-container">
+        <input type="text" id="plant-search" placeholder="Search plants..." class="search-input">
+    </div>
+
+    <div class="plant-grid">
+        {% for plant in plants %}
+        <div class="plant-card">
+            <img src="{{ plant.image_url }}" alt="{{ plant.name }}">
+            <h3>{{ plant.name }}</h3>
+            <p>{{ plant.description }}</p>
+            {% if current_user.is_authenticated %}
+            <button class="add-to-garden" data-plant-id="{{ plant.id }}">Add to Garden</button>
+            {% endif %}
+        </div>
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}
+
+{% block scripts %}
+{{ super() }}
+<script>
+    document.querySelectorAll('.add-to-garden').forEach(button => {
+        button.addEventListener('click', async (e) => {
+            const plantId = e.target.dataset.plantId;
+            try {
+                const response = await fetch('/add-to-garden', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ plant_id: plantId }),
+                });
+                if (response.ok) {
+                    alert('Plant added to your garden!');
+                } else {
+                    alert('Failed to add plant to garden');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('An error occurred');
+            }
+        });
+    });
+</script>
+{% endblock %}

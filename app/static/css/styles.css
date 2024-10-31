@@ -1,0 +1,641 @@
+:root {
+    --primary-green: #243e36ff;
+    --secondary-green: #7ca982ff;
+    --light-green: #e0eec6ff;
+    --white: #f1f7edff;
+    --gray: #f1f7edff;
+}
+
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    color: #243e36ff;
+    background-color: var(--white);
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+header {
+    background-color: var(--white);
+    box-shadow: 0 2px 4px rgba(36, 62, 54, 0.1);
+    position: fixed;
+    width: 100%;
+    z-index: 1000;
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+}
+
+.form-group {
+    margin-bottom: 1rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: var(--primary-green);
+}
+
+/* Modal styling */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+}
+
+.modal-content {
+    background-color: var(--white);
+    margin: 15% auto;
+    padding: 2rem;
+    border-radius: 12px;
+    max-width: 500px;
+    position: relative;
+}
+
+/* Garden grid styling */
+.garden-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin: 2rem 0;
+}
+
+.garden-card {
+    background-color: var(--light-green);
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 6px rgba(36, 62, 54, 0.1);
+}
+
+.garden-controls {
+    text-align: right;
+    margin-bottom: 2rem;
+}
+
+.remove-plant {
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.remove-plant:hover {
+    background-color: #c82333;
+}
+
+.flash-message {
+    padding: 1rem;
+    margin: 1rem 2rem;
+    border-radius: 8px;
+    background-color: var(--light-green);
+    color: var(--primary-green);
+    box-shadow: 0 2px 4px rgba(36, 62, 54, 0.1);
+    animation: slideIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateY(-20px);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+/* Authentication Forms */
+.auth-container {
+    max-width: 400px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background-color: var(--white);
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(36, 62, 54, 0.1);
+    border: 1px solid var(--light-green);
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: var(--primary-green);
+    font-weight: bold;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid var(--secondary-green);
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: border-color 0.3s ease;
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: var(--primary-green);
+    box-shadow: 0 0 0 2px rgba(36, 62, 54, 0.1);
+}
+
+.auth-container .cta-button {
+    width: 100%;
+    margin-top: 1rem;
+}
+
+.auth-links {
+    text-align: center;
+    margin-top: 1.5rem;
+}
+
+.auth-links a {
+    color: var(--primary-green);
+    text-decoration: none;
+    font-size: 1rem;
+}
+
+.auth-links a:hover {
+    color: var(--secondary-green);
+    text-decoration: underline;
+}
+
+.auth-container h2 {
+    text-align: center;
+    color: var(--primary-green);
+    margin-bottom: 2rem;
+}
+
+/* Virtual Garden Page */
+.garden-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    padding: 2rem;
+}
+
+.garden-card {
+    background-color: var(--white);
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 6px rgba(36, 62, 54, 0.1);
+    border: 1px solid var(--light-green);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.garden-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(36, 62, 54, 0.15);
+}
+
+.garden-card h3 {
+    color: var(--primary-green);
+    margin-bottom: 1rem;
+}
+
+.garden-stats {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+    font-size: 0.9rem;
+    color: var(--secondary-green);
+}
+
+.garden-plants {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 1rem;
+}
+
+.plant-tag {
+    background-color: var(--light-green);
+    color: var(--primary-green);
+    padding: 0.25rem 0.75rem;
+    border-radius: 16px;
+    font-size: 0.8rem;
+}
+
+/* Error Pages */
+.error-container {
+    text-align: center;
+    padding: 4rem 2rem;
+}
+
+.error-container h1 {
+    font-size: 4rem;
+    color: var(--primary-green);
+    margin-bottom: 1rem;
+}
+
+.error-container p {
+    color: var(--secondary-green);
+    margin-bottom: 2rem;
+}
+
+/* Responsive Adjustments */
+@media screen and (max-width: 768px) {
+    .auth-container {
+        margin: 2rem 1rem;
+        padding: 1.5rem;
+    }
+
+    .garden-grid {
+        padding: 1rem;
+    }
+}
+
+/* Loading States */
+.loading {
+    position: relative;
+    opacity: 0.7;
+    pointer-events: none;
+}
+
+.loading::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 2rem;
+    height: 2rem;
+    margin: -1rem 0 0 -1rem;
+    border: 3px solid var(--light-green);
+    border-top-color: var(--primary-green);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Pagination */
+.pagination {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    margin: 2rem 0;
+}
+
+.pagination-button {
+    padding: 0.5rem 1rem;
+    border: 1px solid var(--secondary-green);
+    border-radius: 8px;
+    background-color: var(--white);
+    color: var(--primary-green);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.pagination-button:hover {
+    background-color: var(--light-green);
+}
+
+.pagination-button.active {
+    background-color: var(--primary-green);
+    color: var(--white);
+}
+
+.pagination-button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.logo {
+    font-size: 3rem;
+    font-weight: bold;
+    color: var(--primary-green);
+}
+
+.nav-links {
+    display: flex;
+    list-style: none;
+}
+
+.nav-links li {
+    margin-left: 2rem;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: var(--primary-green);
+    font-weight: bold;
+    transition: color 0.3s ease;
+}
+
+.nav-links a:hover {
+    color: var(--secondary-green);
+}
+
+.burger {
+    display: none;
+    cursor: pointer;
+}
+
+.burger div {
+    width: 25px;
+    height: 3px;
+    background-color: var(--primary-green);
+    margin: 5px;
+    transition: all 0.3s ease;
+}
+
+.card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin: 2rem 0;
+}
+
+.info-card {
+    background-color: var(--white);
+    border-radius: 12px;
+    padding: 2rem;
+    box-shadow: 0 4px 6px rgba(36, 62, 54, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: 1px solid var(--light-green);
+}
+
+.info-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(36, 62, 54, 0.15);
+}
+
+.info-card h2 {
+    color: var(--primary-green);
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.info-card p {
+    color: var(--primary-green);
+    margin-bottom: 1.5rem;
+}
+
+.info-card ul {
+    list-style-position: inside;
+    color: var(--primary-green);
+}
+
+.info-card ul li {
+    margin-bottom: 0.5rem;
+}
+
+.hero-section {
+    background-color: var(--light-green);
+    padding: 4rem 2rem;
+    text-align: center;
+    border-radius: 0 0 12px 12px;
+    margin-bottom: 2rem;
+}
+
+.hero-section h1 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+}
+
+.hero-section p {
+    max-width: 800px;
+    margin: 0 auto 2rem;
+    color: var(--primary-green);
+}
+
+.cta-button {
+    display: inline-block;
+    padding: 1rem 2rem;
+    background-color: var(--primary-green);
+    color: var(--white);
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+.cta-button:hover {
+    background-color: var(--secondary-green);
+}
+
+main {
+    flex: 1 0 auto;
+    padding-top: 80px;
+}
+
+section {
+    padding: 4rem 2rem;
+    display: none;
+}
+
+section.active {
+    display: block;
+}
+
+h1,
+h2 {
+    color: var(--primary-green);
+    margin-bottom: 3rem;
+}
+
+h3 {
+    color: var(--primary-green);
+    margin-bottom: 1rem;
+}
+
+.filter-container {
+    position: relative;
+    display: inline-block;
+    margin-bottom: 20px;
+}
+
+.filter-dropdown {
+    display: none;
+    position: absolute;
+    background-color: var(--white);
+    border: 1px solid var(--primary-green);
+    border-radius: 8px;
+    box-shadow: 0px 4px 6px rgba(36, 62, 54, 0.1);
+    padding: 10px;
+    width: 200px;
+    z-index: 1;
+    border: 2px solid var(--light-green);
+}
+
+.filter-dropdown label {
+    display: block;
+    margin: 5px 0;
+}
+
+.filter-dropdown input {
+    margin-right: 8px;
+}
+
+.filter-button {
+    cursor: pointer;
+    border: 1px solid var(--primary-green);
+    border-radius: 8px;
+    padding: 10px;
+    background-color: var(--light-green);
+    display: flex;
+    align-items: center;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 4px 6px rgba(36, 62, 54, 0.1);
+}
+
+.filter-button:hover {
+    background-color: var(--primary-green);
+    color: var(--white);
+    box-shadow: 0 6px 10px rgba(36, 62, 54, 0.15);
+}
+
+.filter-button i {
+    margin-right: 8px;
+}
+
+.category {
+    cursor: pointer;
+    padding: 10px;
+    border-bottom: 1px solid var(--primary-green);
+    color: var(--primary-green);
+}
+
+.category:hover {
+    background-color: var(--light-green);
+}
+
+.plant-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+}
+
+.plant-card {
+    background-color: var(--light-green);
+    border-radius: 8px;
+    padding: 1rem;
+    text-align: center;
+}
+
+.plant-card img {
+    max-width: 100%;
+    border-radius: 8px;
+}
+
+.search-container {
+    margin-bottom: 20px;
+}
+
+.garden-container {
+    background-color: var(--light-green);
+    border-radius: 8px;
+    padding: 2rem;
+    min-height: 400px;
+}
+
+form {
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+input,
+button {
+    display: block;
+    width: 100%;
+    margin-bottom: 1rem;
+    padding: 0.5rem;
+    border: 1px solid var(--primary-green);
+    border-radius: 4px;
+}
+
+button {
+    background-color: var(--primary-green);
+    color: var(--white);
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: var(--secondary-green);
+}
+
+footer {
+    background-color: var(--primary-green);
+    color: var(--white);
+    text-align: center;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+    padding: 1rem;
+    flex-shrink: 0;
+}
+
+#model-viewer {
+    width: 100%;
+    height: 500px;
+    position: relative;
+    overflow: hidden;
+}
+
+@media screen and (max-width: 768px) {
+    .nav-links {
+        position: absolute;
+        right: 0;
+        height: 92vh;
+        top: 8vh;
+        background-color: var(--white);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 50%;
+        transform: translateX(100%);
+        transition: transform 0.5s ease-in;
+    }
+
+    .nav-links li {
+        opacity: 0;
+    }
+
+    .burger {
+        display: block;
+    }
+}
+
+.nav-active {
+    transform: translateX(0%);
+}
+
+@keyframes navLinkFade {
+    from {
+        opacity: 0;
+        transform: translateX(50px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0px);
+    }
+}

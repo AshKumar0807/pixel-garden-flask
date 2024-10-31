@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block title %}Home - Pixel Garden{% endblock %}
+
+{% block content %}
+<section id="home" class="section active">
+    <div class="hero-section">
+        <h1>Welcome to Virtual Pixel Garden</h1>
+        <p>Experience the world of medicinal plants through our interactive digital platform. Explore, learn, and
+            understand the significance of various medicinal plants from the comfort of your home.</p>
+        <a href="{{ url_for('main.plants') }}" class="cta-button">Explore Plants</a>
+    </div>
+
+    <div class="card-grid">
+        <div class="info-card">
+            <h2>Why Medicinal Plants Matter</h2>
+            <p>Medicinal plants have been used for thousands of years to promote health and treat illnesses. They are a
+                key component of many traditional medicine systems, including Ayurveda, Unani, Siddha, and Homeopathy.
+            </p>
+        </div>
+
+        <div class="info-card">
+            <h2>Explore Our Virtual Garden</h2>
+            <ul>
+                <li><strong>Learn:</strong> Discover detailed information about medicinal plants</li>
+                <li><strong>Interact:</strong> Use our 3D model viewer to explore plants</li>
+                <li><strong>Engage:</strong> Participate in virtual tours and educational modules</li>
+            </ul>
+        </div>
+
+        <div class="info-card">
+            <h2>Get Started</h2>
+            <p>Navigate to the Plants section to browse through our extensive plant database. Use the search and filter
+                options to find specific plants or categories that interest you.</p>
+        </div>
+
+        <div class="info-card">
+            <h2>Join Our Community</h2>
+            <p>Stay connected and up-to-date with the latest developments in the world of medicinal plants. Join our
+                community to connect with other enthusiasts and experts.</p>
+            {% if not current_user.is_authenticated %}
+            <a href="{{ url_for('auth.signup') }}" class="cta-button">Sign Up Now</a>
+            {% endif %}
+        </div>
+    </div>
+</section>
+{% endblock %}

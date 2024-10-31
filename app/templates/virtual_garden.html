@@ -1,0 +1,123 @@
+{% extends "base.html" %}
+
+{% block title %}Virtual Garden - Pixel Garden{% endblock %}
+
+{% block content %}
+<section id="virtual-garden" class="section active">
+    <h1>Your Virtual Garden</h1>
+
+    {% if current_user.is_authenticated %}
+    <div class="garden-controls">
+        <button id="create-garden" class="cta-button">Create New Garden</button>
+    </div>
+
+    <div class="garden-grid">
+        {% for garden in gardens %}
+        <div class="garden-card">
+            <h2>{{ garden.name }}</h2>
+            <p>Created: {{ garden.created_at.strftime('%Y-%m-%d') }}</p>
+
+            <div class="garden-plants">
+                <h3>Plants in this garden:</h3>
+                <div class="plant-grid">
+                    {% for plant in garden.plants %}
+                    <div class="plant-card">
+                        <img src="{{ plant.image_url }}" alt="{{ plant.name }}">
+                        <h4>{{ plant.name }}</h4>
+                        <button class="remove-plant" data-garden-id="{{ garden.id }}" data-plant-id="{{ plant.id }}">
+                            Remove
+                        </button>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <div id="garden-modal" class="modal">
+        <div class="modal-content">
+            <h2>Create New Garden</h2>
+            <form id="garden-form">
+                <input type="text" name="garden_name" placeholder="Garden Name" required>
+                <button type="submit" class="cta-button">Create</button>
+            </form>
+        </div>
+    </div>
+    {% else %}
+    <div class="login-prompt">
+        <p>Please <a href="{{ url_for('auth.login') }}">login</a> or <a href="{{ url_for('auth.signup') }}">sign up</a>
+            to create your virtual garden.</p>
+    </div>
+    {% endif %}
+</section>
+{% endblock %}
+
+{% block scripts %}
+{{ super() }}
+<script>
+    // Garden creation modal
+    const modal = document.getElementById('garden-modal');
+    const createButton = document.getElementById('create-garden');
+
+    createButton?.addEventListener('click', () => {
+        console.log("Create button clicked"); // Debugging log
+        modal.style.display = 'block';
+    });
+
+    window.addEventListener('click', (e) => {
+        if (e.target === modal) {
+            modal.style.display = 'block';
+        }
+    });
+
+    // Garden creation form
+    document.getElementById('garden-form')?.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const formData = new FormData(e.target);
+        try {
+            const response = await fetch('/create-garden', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    name: formData.get('garden_name'),
+                }),
+            });
+            if (response.ok) {
+                location.reload();
+            }
+        } catch (error) {
+            console.error('Error:', error);
+        }
+    });
+
+    // Plant removal
+    document.querySelectorAll('.remove-plant').forEach(button => {
+        button.addEventListener('click', async (e) => {
+            const gardenId = e.target.dataset.gardenId;
+            const plantId = e.target.dataset.plantId;
+            if (confirm('Remove this plant from your garden?')) {
+                try {
+                    const response = await fetch('/remove-from-garden', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            garden_id: gardenId,
+                            plant_id: plantId,
+                        }),
+                    });
+                    if (response.ok) {
+                        location.reload();
+                    }
+                } catch (error) {
+                    console.error('Error:', error);
+                }
+            }
+        });
+    });
+</script>
+{% endblock %}
